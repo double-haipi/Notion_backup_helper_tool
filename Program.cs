@@ -298,7 +298,7 @@ namespace NotionBackupHelpTool
                 template = File.ReadAllText(_databaseItemTemplateFileName);
             }
 
-            template = template.Replace(_titlePlaceHolder, page.title);
+            template = template.Replace(_titlePlaceHolder, NomalizePathName(page.title));
             template = template.Replace(_tagPlaceHolder, page.tag);
             template = template.Replace(_idPlaceHolder, page.id);
 
@@ -377,6 +377,30 @@ namespace NotionBackupHelpTool
                 Console.WriteLine("");
                 Console.WriteLine(body);
             }
+        }
+        #endregion
+
+
+        #region OtherFunction
+        //windows 最长路径长度为260,给用户预留80个作为自定义路径名，备份文件+目录使用170个，则文件名长度不能超过85
+        //非法路径字符 \ / : * ? " < > | ” 
+
+        private static char[] _invalidCharForPath = new char[] { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
+
+        private static string NomalizePathName(string originName)
+        {
+            for (int i = 0; i < _invalidCharForPath.Length; i++)
+            {
+                if (originName.Contains(_invalidCharForPath[i]))
+                {
+                    originName = originName.Replace(_invalidCharForPath[i], ' ');
+                }
+            }
+            if (originName.Length > 85)
+            {
+                originName = originName.Substring(0, 85);
+            }
+            return originName;
         }
         #endregion
     }
