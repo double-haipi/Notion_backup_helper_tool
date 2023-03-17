@@ -5,7 +5,7 @@
 	"properties": {
 		"递归备份": {
 			"type": "checkbox",
-			"checkbox": false
+			"checkbox": true
 		},
 		"备份": {
 			"type": "checkbox",

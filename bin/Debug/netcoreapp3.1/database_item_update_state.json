@@ -1,5 +1,8 @@
 {
 	"properties": {
+		"递归备份": {
+			"checkbox": true
+		},
 		"备份": {
 			"checkbox": true
 		}
